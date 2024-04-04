@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# List of participant numbers
+participants="1,2,3"
+
+# Splitting participant numbers into an array
+IFS=',' read -r -a participant_list <<< "$participants"
+
+# Loop through each participant and start the download process in a separate screen session
+for participant in "${participant_list[@]}"
+do
+    # Start a screen session for each participant
+    screen -dmS video_download_participant_"$participant" bash -c "python epic_downloader.py --videos --participants $participant"
+done
+
